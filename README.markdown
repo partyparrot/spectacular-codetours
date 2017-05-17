@@ -24,6 +24,14 @@ npm start
 
 :octocat: :eyes:
 
+## Why a separate app?
+
+Spectacle slides doesn't play well with Meteor, the problem seems to come from CSS modules. I tried to add a Meteor build plugin for CSS modules but it didn't work. 
+
+This may be because Spectacle is heavily tied to Webpack? Honestly no idea.
+
+So I've made a separate app: this is going to be WICKED!!! :tada:
+
 ## Reference
 
 The Spectacle core API is available at [https://github.com/FormidableLabs/spectacle/blob/master/README.markdown](https://github.com/FormidableLabs/spectacle/blob/master/README.markdown).
