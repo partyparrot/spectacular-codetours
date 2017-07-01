@@ -1,11 +1,8 @@
 query tour($tourRepository: String!) {
   tour(tourRepository: $tourRepository) {
-    _id
     repository
     targetRepository
-    description
     steps {
-      _id
       title
       slug
       index
