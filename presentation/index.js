@@ -1,54 +1,38 @@
-import React from "react";
+import React from 'react';
 
-import {
-  ApolloProvider,
-  ApolloClient,
-  createNetworkInterface,
-  graphql
-} from "react-apollo";
+import { ApolloProvider, ApolloClient, createNetworkInterface, graphql } from 'react-apollo';
 
-// Import Spectacle Core tags
-import {
-  Deck,
-  Heading,
-  ListItem,
-  List,
-  Slide,
-  Text
-} from "spectacle";
-
-import CodeSlide from "spectacle-code-slide";
+import { Deck, Heading, ListItem, List, Slide, Text } from 'spectacle';
+import createTheme from 'spectacle/lib/themes/default';
+import CodeSlide from 'spectacle-code-slide';
 
 // fancy!
-import TOUR_QUERY from "./tour.graphql";
-
-// Import theme
-import createTheme from "spectacle/lib/themes/default";
+import TOUR_QUERY from './tour.graphql';
 
 // Require CSS
-require("normalize.css");
-require("spectacle/lib/themes/default/index.css");
+require('normalize.css');
+require('spectacle/lib/themes/default/index.css');
 
 const theme = createTheme(
   {
-    primary: "#122b45",
-    secondary: "#fafafa",
-    tertiary: "#ccc",
-    quartenary: "#cc99cd"
+    primary: '#122b45',
+    secondary: '#fafafa',
+    tertiary: '#ccc',
+    quartenary: '#cc99cd',
   },
   {
-    primary: "Montserrat",
-    secondary: "Helvetica"
+    primary: 'Montserrat',
+    secondary: 'Helvetica',
   }
 );
 
-const extractRepoInfo = (fullName) => fullName.split("/");
+const extractRepoInfo = fullName => fullName.split('/');
 
-const CodeTour = ({ tour, loading /*, error */ }) => {
+const CodeTour = ({ tour, loading /* , error */ }) => {
   if (loading) {
     return (
       <Deck transition={[]} transitionDuration={0} theme={theme}>
-        <Slide transition={["zoom"]} bgColor="primary">
+        <Slide transition={['zoom']} bgColor="primary">
           <Heading size={1} caps lineHeight={1} textColor="secondary">
             Loading your tour...
           </Heading>
@@ -60,12 +44,12 @@ const CodeTour = ({ tour, loading /*, error */ }) => {
   const { targetRepository, repository, description, steps } = tour;
 
   const [, targetName] = extractRepoInfo(targetRepository);
-  const [ author ] = extractRepoInfo(repository);
+  const [author] = extractRepoInfo(repository);
 
   return (
-    <Deck transition={["zoom", "slide"]} transitionDuration={500} theme={theme}>
+    <Deck transition={['zoom', 'slide']} transitionDuration={500} theme={theme}>
       {/* welcome slide */}
-      <Slide transition={["fade"]} bgColor="primary">
+      <Slide transition={['fade']} bgColor="primary">
         <Heading size={3} lineHeight={1} textColor="secondary">
           {targetName}
         </Heading>
@@ -74,33 +58,37 @@ const CodeTour = ({ tour, loading /*, error */ }) => {
         </Text>
       </Slide>
       {/* steps overview */}
-      <Slide transition={["fade"]} bgColor="primary" textColor="tertiary">
-        <Heading size={6} textColor="secondary" caps>Steps</Heading>
+      <Slide transition={['fade']} bgColor="primary" textColor="tertiary">
+        <Heading size={6} textColor="secondary" caps>
+          Steps
+        </Heading>
         <List ordered>
-          {steps.map(({ _id, title }) => (
-            <ListItem key={`item-${_id}`}>{title}</ListItem>
-          ))}
+          {steps.map(({ _id, title }) =>
+            <ListItem key={`item-${_id}`}>
+              {title}
+            </ListItem>
+          )}
         </List>
       </Slide>
       {/* for each step, add a code slide with the title & code sections */}
-      {steps
-        .map(({ _id, title, code, sections }, index) => [
-          <CodeSlide
-            key={`step-${_id}-section-${index}`}
-            transition={[]}
-            lang="js"
-            code={code}
-            bgColor="primary"
-            ranges={[
-              { loc: [0, 1], title },
-              ...sections.map((section) => ({
-                loc: [section.lineStart - 1, section.lineEnd],
-                note: section.slug
-              }))]}
-          />
-        ])}
+      {steps.map(({ _id, title, code, sections }) => [
+        <CodeSlide
+          key={`step-${_id}`}
+          transition={[]}
+          lang="js"
+          code={code}
+          bgColor="primary"
+          ranges={[
+            { loc: [0, 1], title },
+            ...sections.map(section => ({
+              loc: [section.lineStart - 1, section.lineEnd],
+              note: section.slug,
+            })),
+          ]}
+        />,
+      ])}
       {/* conclusion slide */}
-      <Slide transition={["fade"]} bgColor="primary">
+      <Slide transition={['fade']} bgColor="primary">
         <Heading size={3} textColor="secondary">
           Thanks for taking this tour!
         </Heading>
@@ -117,18 +105,17 @@ const CodeTourWithData = graphql(TOUR_QUERY, {
   props: ({ data: { tour, loading, error } }) => ({
     tour,
     loading,
-    error
-  })
+    error,
+  }),
 })(CodeTour);
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: "https://ljk3vj7pq.lp.gql.zone/graphql" // === CodeTours GraphQL server
-  })
+    uri: 'https://ljk3vj7pq.lp.gql.zone/graphql', // === CodeTours GraphQL server
+  }),
 });
 
-export default () => (
+export default () =>
   <ApolloProvider client={client}>
     <CodeTourWithData tourRepository="xavcz/codetours-starter-kit-v2" />
-  </ApolloProvider>
-);
+  </ApolloProvider>;
