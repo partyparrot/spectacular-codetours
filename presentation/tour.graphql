@@ -5,10 +5,7 @@ query tour($tourRepository: String!) {
     steps {
       title
       slug
-      index
-      codeUrl
       code
-      filePath
       sections {
         slug
         lineStart
