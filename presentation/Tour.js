@@ -57,17 +57,17 @@ const Tour = ({ tour, loading /* , error */ }) => {
           Steps
         </Heading>
         <List ordered>
-          {steps.map(({ _id, title }) =>
-            <ListItem key={`item-${_id}`}>
+          {steps.map(({ title }) =>
+            <ListItem key={`item-${title}`}>
               {title}
             </ListItem>
           )}
         </List>
       </Slide>
       {/* for each step, add a code slide with the title & code sections */}
-      {steps.map(({ _id, title, code, sections }) => [
+      {steps.map(({ title, code, sections }) => [
         <CodeSlide
-          key={`step-${_id}`}
+          key={`step-${title}`}
           transition={[]}
           lang="js"
           code={code}
