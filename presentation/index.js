@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { ApolloProvider, ApolloClient, createNetworkInterface, graphql } from 'react-apollo';
 
 import Tour from './Tour';
