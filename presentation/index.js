@@ -31,10 +31,10 @@ require("spectacle/lib/themes/default/index.css");
 
 const theme = createTheme(
   {
-    primary: "white",
-    secondary: "#1F2022",
-    tertiary: "#03A9FC",
-    quartenary: "#122b45"
+    primary: "#122b45",
+    secondary: "#fafafa",
+    tertiary: "#ccc",
+    quartenary: "#cc99cd"
   },
   {
     primary: "Montserrat",
@@ -49,12 +49,9 @@ const CodeTour = ({ tour, loading /*, error */ }) => {
     return (
       <Deck transition={[]} transitionDuration={0} theme={theme}>
         <Slide transition={["zoom"]} bgColor="primary">
-          <Heading size={1} fit caps lineHeight={1} textColor="secondary">
+          <Heading size={1} caps lineHeight={1} textColor="secondary">
             Loading your tour...
           </Heading>
-          <Text margin="10px 0 0" textColor="tertiary" size={1} fit bold>
-            \o/
-          </Text>
         </Slide>
       </Deck>
     );
@@ -93,7 +90,7 @@ const CodeTour = ({ tour, loading /*, error */ }) => {
             transition={[]}
             lang="js"
             code={code}
-            bgColor="quartenary"
+            bgColor="primary"
             ranges={[
               { loc: [0, 1], title },
               ...sections.map((section) => ({
@@ -104,10 +101,10 @@ const CodeTour = ({ tour, loading /*, error */ }) => {
         ])}
       {/* conclusion slide */}
       <Slide transition={["fade"]} bgColor="primary">
-        <Heading size={3} textColor="tertiary">
+        <Heading size={3} textColor="secondary">
           Thanks for taking this tour!
         </Heading>
-        <Heading size={5} textColor="quartenary">
+        <Heading size={5} textColor="tertiary">
           Tour made by {author}
         </Heading>
       </Slide>
